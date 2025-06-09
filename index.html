@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bowel Prep Risk Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+    }
+    h2 {
+      color: #2a5d84;
+    }
+    .section {
+      margin-bottom: 20px;
+    }
+    .result {
+      padding: 15px;
+      border-radius: 10px;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Bowel Preparation Risk Calculator</h2>
+
+  <div class="section">
+    <strong>Major Risk Factors:</strong><br>
+    <label><input type="checkbox" class="major"> Chronic liver disease</label><br>
+    <label><input type="checkbox" class="major"> Chronic kidney disease</label><br>
+    <label><input type="checkbox" class="major"> Tricyclic antidepressants</label><br>
+    <label><input type="checkbox" class="major"> Opiate use</label><br>
+  </div>
+
+  <div class="section">
+    <strong>Minor Risk Factors:</strong><br>
+    <label><input type="checkbox" class="minor"> Prior poor preparation</label><br>
+    <label><input type="checkbox" class="minor"> Prior abdominal surgery</label><br>
+    <label><input type="checkbox" class="minor"> Constipation</label><br>
+    <label><input type="checkbox" class="minor"> Type 2 Diabetes (T2DM)</label><br>
+    <label><input type="checkbox" class="minor"> Anticholinergics</label><br>
+    <label><input type="checkbox" class="minor"> GLP-1 medication</label><br>
+  </div>
+
+  <button onclick="calculate()">Calculate Bowel Prep</button>
+
+  <div id="result" class="result"></div>
+
+  <script>
+    function calculate() {
+      const major = document.querySelectorAll('.major:checked').length;
+      const minor = document.querySelectorAll('.minor:checked').length;
+      const resultBox = document.getElementById('result');
+
+      if (major === 0 && minor < 2) {
+        resultBox.innerText = "🟢 Standard: 2L bowel preparation";
+        resultBox.style.backgroundColor = "#d4edda";
+        resultBox.style.color = "#155724";
+      } else if ((major === 1 && minor === 0) || (major === 0 && minor === 2)) {
+        resultBox.innerText = "🟡 Intermediate: 4L bowel preparation";
+        resultBox.style.backgroundColor = "#fff3cd";
+        resultBox.style.color = "#856404";
+      } else if ((major === 1 && minor >= 1) || major > 1 || minor >= 3) {
+        resultBox.innerText = "🔴 High Risk: 4L bowel preparation + Bisacodyl 10mg for 3 days";
+        resultBox.style.backgroundColor = "#f8d7da";
+        resultBox.style.color = "#721c24";
+      } else {
+        resultBox.innerText = "⚠️ Please review the criteria.";
+        resultBox.style.backgroundColor = "#ffeeba";
+        resultBox.style.color = "#856404";
+      }
+    }
+  </script>
+
+</body>
+</html>
